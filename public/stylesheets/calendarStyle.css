@@ -1,0 +1,44 @@
+@media screen and (min-width: 480px) {
+    body {
+        margin: 0;
+        padding: 0;    
+        /*                    background-color: #a4bdec;*/
+        background-image: url("../images/bg_3_2.png");
+    }
+    #calendar{
+
+        width: 80%;
+        margin-left: 10%;
+        margin-top:  150px;  
+        height: 80%;
+    }
+
+    .fc-timelineDay-view tr {
+
+        height: 100px;
+
+    }
+
+    .fc-event{
+        height: 84px;
+    }
+
+
+    .fc-resource-area {
+        width: 180px;
+    }
+
+    .fc-scroller {
+        overflow-y: hidden !important;
+    }
+}
+.fc-widget-content{
+    border: 2px;
+}
+
+.icons{
+    font-size: 40px;
+    color: black;
+    margin: auto;
+    width : 50%;
+}

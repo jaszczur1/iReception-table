@@ -1,0 +1,24 @@
+{
+  "name": "utc-angular",
+  "authors": [
+    "jaszczur1 <m1jadczak@gmail.com>"
+  ],
+  "description": "advantech project",
+  "main": "",
+  "license": "MIT",
+  "homepage": "index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "*",
+    "bootstrap": "*",
+    "angular": "*",
+    "momentjs": "*",
+    "remarkable-bootstrap-notify":""
+  }
+}

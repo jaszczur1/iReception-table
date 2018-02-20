@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>iReception</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script type="text/javascript" src="lib/bower_components/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="lib/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <link rel="stylesheet" href="lib/bower_components/bootstrap/dist/css/bootstrap.css">
+        
+        <script type="text/javascript" src="lib/bower_components/angular/angular.js"></script>
+        <script type="text/javascript" src="app/app.module.js"></script>
+        <script type="text/javascript" src="app/table-list/table-list.module.js"></script>
+        <script type="text/javascript" src="app/table-list/table-list.component.js"></script>
+        <script type="text/javascript" src="app/table-room/table-room.module.js"></script>
+        <script type="text/javascript" src="app/table-room/table-room.component.js"></script>
+        
+        <script type="text/javascript" src="lib/bower_components/momentjs/moment.js"></script>
+        <script type="text/javascript" src="lib/bower_components/remarkable-bootstrap-notify/bootstrap-notify.js"></script>
+        <link rel="stylesheet" href="stylesheets/styleReception.css">
+        
+    </head>
+    
+    <body ng-app="myApp">
+<img src="images/Advantech_logo_web.png">
+        <div class="container">
+            <h1><b>Welcome to Advantech Poland</b></h1>
+            
+            <h3>Todays meetings</h3>
+            <table-l></table-l>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<div class="row" ng-repeat="tab in $ctrl.table">
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->          
+        <div class="panel-heading ">{{tab.Subject}}</div>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td colspan="3"><b>Room :  {{tab.Location.DisplayName}}</b></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3"><b>Time :  {{tab.Start.DateTime + " - " + tab.End.DateTime}}</b></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3"><b>Organizer :{{" " + tab.Organizer.EmailAddress.Name}}</b></td>
+                </tr>
+
+                <tr>
+                    <td colspan="3"><b>Guest :</b></td>
+                </tr>
+
+                <tr ng-repeat="Att in tab.Attendees">
+                    <td>{{Att.EmailAddress.Name}}</td>
+                    <td>{{Att.EmailAddress.Address}}</td>
+                    <td> Response : {{Att.Status.Response}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row buttom-content">
+
+    <div style="text-align: center">
+        <button class="btn btn-primary" ng-click="$ctrl.message($event)">pan kanapka<span class="glyphicon glyphicon-cutlery"></span></button>
+        <button class="btn btn-primary" ng-click="$ctrl.message($event)">pan pobudka<span class="glyphicon glyphicon-cutlery"></span></button>
+    </div>
+</div>

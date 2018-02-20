@@ -1,0 +1,31 @@
+body {
+    background-color: #000;  
+    
+}
+.container-fluid {
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left:auto;
+    overflow-x: hidden;
+ }
+.nameRoom {
+    color: white;
+    text-align: center;
+    padding: 40px;
+}
+img{
+    height: 100%;
+}
+.content{
+    background-color: white;
+    height: 300px;
+    margin-top: 20px;
+}
+.tekst{
+    position: relative;
+    top:50px;
+    font-size: 1.7em;
+/*    overflow: initial;*/
+
+}
