@@ -1,13 +1,15 @@
 room.component('tableR', {
     templateUrl: "app/table-room/table-room.temp.html",
-    controller: function getListTable(idTable) {
-        
-        var roomName =['APSC.MeetingRoom.01','APSC.MeetingRoom.02','APSC.VideoConfRoom'];
+    controller: function getListTable(idTable, $scope) {
+
+        var roomName = ['APSC.MeetingRoom.01', 'APSC.MeetingRoom.02', 'APSC.VideoConfRoom'];
+        var dayWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thuesday', 'Friday', 'Saturday', 'Sunday']
         var NameTemp;
-        
+
         this.table = [];
         var self = this;
         var data_to_html;
+
 
         setInterval(function () {
             idTable.getEvent().then(function (res) {
@@ -15,33 +17,50 @@ room.component('tableR', {
             });
 
         }, 2000);
-         
+
+        var getTime;
+        setInterval(function () {
+
+            //  time.innerHTML = moment().format('H') + ":" + moment.format('m');
+            getTime = moment().format('H m');
+            getTime = getTime.split(" ");
+            if (parseInt(getTime[1]) <= 10)
+                getTime[1] = '0' + getTime[1];
+            getTime = getTime[0] + " : " + getTime[1] + " " + dayWeek[moment().weekday() - 1];
+            self.time = getTime;
+
+        }, 1000);
+
+
         function getRoomName() {
             NameTemp = window.location;
             NameTemp = NameTemp.toString();
-            NameTemp =NameTemp.split('/');
-            if(NameTemp[3] === 'room1') return roomName[0];
-            if(NameTemp[3] === 'room2') return roomName[1];
-            if(NameTemp[3] === 'conference') return roomName[2]; 
-            
+            NameTemp = NameTemp.split('/');
+            if (NameTemp[3] === 'room1')
+                return roomName[0];
+            if (NameTemp[3] === 'room2')
+                return roomName[1];
+            if (NameTemp[3] === 'conference')
+                return roomName[2];
+
         }
- 
+
         function data_to_html(data) {
             self.table = [];
-            console.log(data.value);
             array_data = data.value;
 
             for (var i = 0; i < array_data.length; i++) {
                 try {
                     Start = moment(array_data[i].Start.DateTime).add(1, 'h').format();
                     End = moment(array_data[i].End.DateTime).add(1, 'h').format();
-                    
+
                     if (array_data[i].Location.DisplayName !== getRoomName()
                             || array_data[i].IsCancelled === true
                             || moment().isAfter(End))
-                            continue;
-         
-                    if (moment().isSameOrBefore(Start)||moment().isBetween(Start, End) ) {
+                        continue;
+
+                        if (moment().isSameOrBefore(Start) || moment().isBetween(Start, End)) {
+                         
                         self.table.push(array_data[i]);
                         console.log(array_data[i])
                         console.log(self.table.length)
@@ -62,14 +81,21 @@ room.component('tableR', {
                         array_data[item_out].Attendees.splice(item_in, item_in);
                 }
             }
-            if (self.table.length === 0)
+            
+           
+            if (self.table.length === 0) {
+                  
                 self.table.push({"Location": {"DisplayName": getRoomName()},
-                "Start.DateTime":"-", "End.DateTime":"-", "EmailAddress":{"Name":"-"}, "Subject":"no events"});
+                    "Start.DateTime": "-", "End.DateTime": "-", "EmailAddress": {"Name": "-"}, "Subject": "no events"});
+            }
+          
         }
     }
 });
 
 room.factory('idTable', function ($http, $interval) {
+
+
 
     var table = {};
     table.getEvent = function () {
@@ -79,6 +105,6 @@ room.factory('idTable', function ($http, $interval) {
     table.refreshToken = function () {
         return $http.get('getToken')
     };
-    
+
     return table;
 })

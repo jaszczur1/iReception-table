@@ -110,7 +110,7 @@ router.get('/mail', function (request, response, next) {
     console.log('try send msg');
 //    console.log(request.param);
 
-  
+
     var host = request.param('host');
     var message = request.param('message');
     var titleEventObiect = request.param('titleEventObiect');
@@ -155,69 +155,76 @@ router.get('/mail', function (request, response, next) {
                     Verror = "ok";
                     response.json(json1);
                 }
-            });
-}
-);
-router.get('/getCalendarFromEvent', function (request, response, next) {
+            })
+});
 
-    var userInfo = {
+var events;
+var apiOptions = {};
+
+setInterval(function(){
+ 
+     userInfo = {
         email: 'APSC.iReception@advantech.com'
     };
-
+ 
     var startDateTime = getActualTime().format("YYYY-M-D");
     var endDateTime = getActualTime().add(1, 'day');
     endDateTime = getActualTime(endDateTime).format("YYYY-M-D");
 
-    console.log("get event for day " + startDateTime + " -" + endDateTime);
 
-    var apiOptions = {
-        token: token,
-        // If none specified, the Primary calendar will be used
-        user: userInfo,
-        startDatetime: startDateTime,
-        endDatetime: endDateTime
-    };
+    console.log("get event for today " + startDateTime + " -" + endDateTime);
+   
+    apiOptions.token = token;
+    // If none specified, the Primary calendar will be used
+    apiOptions.user = userInfo;
+    apiOptions.startDatetime = startDateTime;
+    apiOptions.endDatetime = endDateTime;
 
-    outlook.calendar.syncEvents(apiOptions, function (error, events) {
-        if (error) {
-            console.log('syncEvents returned an error:', error);
-            response.status(500).send();
+   
 
+    outlook.calendar.syncEvents(apiOptions, function (error, evn) {
 
-        } else {
+        if (error)
+            console.log('occure issue with getting events');
+        else {
 
-            try {
-        
-                response.json(events);
+         
                 console.log(events);
-                console.log(events.value[0].Start);
-                console.log(events.value[0].End);
-//                console.log(events.value[0].Location);
-//                console.log(events.value[0].Organizer.EmailAddress.Address);
-//                console.log(events.value[0].Organizer.EmailAddress.Name);
-//                console.log(events.value[0].Subject);
-//                console.log('/////////////////////////////////////////////////////');
+                events = evn;
+                
 
-            } catch (e) {
-                console.log("brak zdarzen w kalenarzu " + e)
-            }
+                if (apiOptions.deltaToken === undefined) {
+                    console.log('delta token nie zdefiniowany');
+                   var delataEvents = events['@odata.deltaLink'];
+                    position = delataEvents.indexOf('deltatoken=') + 11;
+                    
+                        console.log(position)
+                        apiOptions.deltaToken = delataEvents.substring(position);
+                         console.log(apiOptions);
+                    }
+                
 
-//             Do something with the events.value array
-//             Then get the @odata.deltaLink
-//              var delta = messages['@odata.deltaLink'];
-//
-//             Handle deltaLink value appropriately:
-//             In general, if the deltaLink has a $skiptoken, that means there are more
-//             "pages" in the sync results, you should call syncEvents again, passing
-//             the $skiptoken value in the apiOptions.skipToken. If on the other hand,
-//             the deltaLink has a $deltatoken, that means the sync is complete, and you should
-//             store the $deltatoken value for future syncs.
-//            
-//             The one exception to this rule is on the intial sync (when you call with no skip or delta tokens).
-//             In this case you always get a $deltatoken back, even if there are more results. In this case, you should
-//             immediately call syncMessages again, passing the $deltatoken value in apiOptions.deltaToken.
+
+            // Do something with the events.value array
+            // Then get the @odata.deltaLink
+            //  var delta = messages['@odata.deltaLink'];
+
+            // Handle deltaLink value appropriately:
+            // In general, if the deltaLink has a $skiptoken, that means there are more
+            // "pages" in the sync results, you should call syncEvents again, passing
+            // the $skiptoken value in the apiOptions.skipToken. If on the other hand,
+            // the deltaLink has a $deltatoken, that means the sync is complete, and you should
+            // store the $deltatoken value for future syncs.
+            //
+            // The one exception to this rule is on the intial sync (when you call with no skip or delta tokens).
+            // In this case you always get a $deltatoken back, even if there are more results. In this case, you should
+            // immediately call syncMessages again, passing the $deltatoken value in apiOptions.deltaToken.
         }
-    });
+    });}, 30000);
+
+router.get('/getCalendarFromEvent', function (request, response, next) {
+    
+    response.json(events);
 });
 
 //https://github.com/jasonjoh/node-outlook/blob/master/reference/node-outlook.md

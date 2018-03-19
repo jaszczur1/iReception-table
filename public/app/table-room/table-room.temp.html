@@ -2,48 +2,25 @@
     <div class="nameRoom">
         <h1>{{tab.Location.DisplayName}}</h1>
     </div>
+
+    <div id="time" class="nameRoom">
+        <h2>{{$ctrl.time}}</h2>
+    </div>
+
+
     <div class="content row">
         <div class="col-sm-5">
             <img src="images/virtual-meeting-wide.jpg">
         </div>
         <div class="col-sm-1"></div>
-        <div class="col-sm-5 tekst">
+        <div class="col-sm-4 tekst">
             <h1><b>{{tab.Subject}}</b></h1>
 
             <h4><b>Time : {{tab.Start.DateTime + " ~ " + tab.End.DateTime}}
-                    
-            </b></h4>
+
+                </b></h4>
             <div><b>Host : {{tab.Organizer.EmailAddress.Name}} </b></div>
-            <div class="col-sm-1">
-            </div>
-            <!--        <div class="panel panel-primary">
-                         Default panel contents           
-                        <div class="panel-heading ">{{tab.Subject}}</div>
-                        <table class="table table-bordered">
-                            <tbody>
-                            <tr>
-                                <td colspan="3"><b>Room :  {{tab.Location.DisplayName}}</b></td>
-                            </tr>
-            
-                            <tr>
-                                <td class=""><b>Time :  {{tab.Start.DateTime+" - "+ tab.End.DateTime}}</b></td>
-                            </tr>
-                            
-                            <tr>
-                                <td colspan="3"><b>Organizer :{{" "+ tab.Organizer.EmailAddress.Name}}</b></td>
-                            </tr>
-                            
-                            <tr>
-                                <td colspan="3"><b>Guest :</b></td>
-                            </tr>
-            
-                            <tr ng-repeat="Att in tab.Attendees">
-                                <td>{{Att.EmailAddress.Name}}</td>
-                                <td>{{Att.EmailAddress.Address}}</td>
-                                <td> Response : {{Att.Status.Response}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>-->
+
         </div>
     </div>
+</div>

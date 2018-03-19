@@ -38,8 +38,9 @@ app.use('/authorize', authorize);
 app.use('/getToken', getToken);
 app.use('/calendar', calendar);
 app.use('/room1', room1);
-app.use('/room2', room2);
-app.use('/conference', room3);
+app.use('/room1', room2);
+app.use('/room1', room3);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
